@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nursultan 1.16.5 - Премиум конфиг для Minecraft</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #ff4d94;
+            --dark: #0d0c1d;
+            --light: #f8f9fa;
+            --neon: #00f2fe;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1a2e 100%);
+            color: var(--light);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* RTX эффекты */
+        .rtx-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.3;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(106, 17, 203, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(37, 117, 252, 0.3) 0%, transparent 40%),
+                radial-gradient(circle at 50% 10%, rgba(255, 77, 148, 0.2) 0%, transparent 40%);
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        /* Основной контейнер */
+        .main-container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(13, 12, 29, 0.85);
+            border-radius: 25px;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .main-container:hover {
+            transform: perspective(1000px) rotateY(-1deg) rotateX(1deg);
+            box-shadow: 0 30px 70px rgba(0, 242, 254, 0.2);
+        }
+        
+        /* Заголовок */
+        .header {
+            padding: 30px;
+            text-align: center;
+            background: linear-gradient(90deg, rgba(106, 17, 203, 0.2) 0%, rgba(37, 117, 252, 0.2) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--neon);
+            filter: drop-shadow(0 0 10px var(--neon));
+            animation: pulse 2s infinite;
+        }
+        
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 2.2rem;
+            background: linear-gradient(to right, var(--neon), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        /* Контент */
+        .content {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .download-card {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 242, 254, 0.1), transparent);
+            transform: rotate(45deg);
+            z-index: 0;
+            animation: shine 4s infinite;
+        }
+        
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .version {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .version strong {
+            color: var(--neon);
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 16px 45px;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 20px rgba(37, 117, 252, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .download-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .download-btn:hover:before {
+            left: 100%;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(37, 117, 252, 0.5);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        .download-btn i {
+            font-size: 1.4rem;
+            animation: bounce 2s infinite;
+        }
+        
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .warning {
+            background: linear-gradient(45deg, #ff000033, #ff4d9433);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 77, 148, 0.3);
+            font-size: 0.9rem;
+        }
+        
+        /* Анимации */
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 10px var(--neon)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 20px var(--neon)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 10px var(--neon)); }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(45deg) translateX(-50%); }
+            100% { transform: rotate(45deg) translateX(50%); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .content {
+                padding: 25px;
+            }
+            
+            .logo-text {
+                font-size: 1.8rem;
+            }
+            
+            .download-card {
+                padding: 20px;
+            }
+            
+            .card-title {
+                font-size: 1.5rem;
+            }
+            
+            .version {
+                font-size: 1.1rem;
+            }
+            
+            .download-btn {
+                padding: 14px 35px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .logo-text {
+                font-size: 1.5rem;
+            }
+            
+            .download-btn {
+                width: 100%;
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- RTX эффекты -->
+    <div class="rtx-overlay"></div>
+    <div class="particles" id="particles-js"></div>
+    
+    <!-- Основной контейнер -->
+    <div class="main-container floating">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-dragon"></i>
+                <div class="logo-text">Nursultan</div>
+            </div>
+            <div class="subtitle">Премиум конфиг для Minecraft 1.16.5</div>
+        </div>
+        
+        <div class="content">
+            <div class="download-card">
+                <h2 class="card-title">Скачать конфиг</h2>
+                <div class="version">Версия: <strong>Nursultan 1.16.5 v4.7</strong></div>
+                
+                <a href="https://workupload.com/start/nNvvM9V5ayY" class="download-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i>
+                    Скачать архив
+                </a>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="warning">
+                <p><i class="fas fa-exclamation-triangle"></i> Внимание: Использование конфигов может нарушать правила серверов. Используйте на свой риск.</p>
+            </div>
+            <p>© 2023 Nursultan Config. Этот сайт не аффилирован с Mojang или Microsoft.</p>
+        </footer>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Инициализация частиц
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 70, density: { enable: true, value_area: 800 } },
+                color: { value: "#00f2fe" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#6a11cb",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                }
+            }
+        });
+        
+        // Анимация кнопки скачивания
+        document.getElementById('downloadBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Анимация кнопки
+            this.classList.add('downloading');
+            const originalContent = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Загрузка...';
+            
+            // Эффект перед редиректом
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-check"></i> Скачано!';
+                this.style.background = 'linear-gradient(45deg, #00c853, #64dd17)';
+                
+                // Редирект на страницу скачивания
+                setTimeout(() => {
+                    window.location.href = 'https://workupload.com/start/nNvvM9V5ayY';
+                }, 800);
+            }, 1500);
+        });
+        
+        // Параллакс эффект
+        document.addEventListener('mousemove', (e) => {
+            const container = document.querySelector('.main-container');
+            const x = (window.innerWidth - e.pageX) / 50;
+            const y = (window.innerHeight - e.pageY) / 50;
+            
+            container.style.transform = 
+                `perspective(1000px) rotateY(${x}deg) rotateX(${y}deg)`;
+        });
+    </script>
+</body>
+</html>
